@@ -36,6 +36,6 @@ RUN sha512sum -c sha512sums.txt
 
 RUN cd core/tf_pose/pafprocess/ && sudo swig -python -c++ pafprocess.i && sudo /opt/conda/bin/python setup.py build_ext --inplace
 
-EXPOSE 5000
+RUN sed -i -e "s/self.app.run(host)/self.app.run(host, port=os.environ.get('PORT'))/g" /opt/conda/lib/python3.7/site-packages/maxfw/core/app.py
 
 CMD python app.py
